@@ -7,11 +7,11 @@ train_2 <- data2[sample2 == 1, ]
 test_2 <-  data2[sample2 == 2, ]
 
 
-model2 <- naive_bayes(Division ~ Hits, data = data, usekernel = F)
+model2 <- naive_bayes(League ~ Hits, data = data, usekernel = F)
 
 Predicted_data2 <- data.frame(Hits=seq(min(data$Hits), max(data$Hits), len=500))
 
-Predicted_data2$Division <- predict(model, Predicted_data, type = "response")
+Predicted_data2$League <- predict(model, Predicted_data, type = "response")
 
-ggplot(train, aes(x=Hits, y=Division)) + geom_point()+ stat_smooth(method = 'lm')
+ggplot(train, aes(x=Hits, y=League)) + geom_point() + geom_smooth()
 

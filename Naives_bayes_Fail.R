@@ -3,8 +3,8 @@ library(ggplot2)
 library(naivebayes)
 data4 <- Hitters
 sample3 <- sample(2, nrow(data2), replace = T, prob = c(0.8, 0.2)) 
-train_3 <- data2[sample2 == 1, ]
-test_3 <-  data2[sample2 == 2, ]
+train_3 <- data2[sample3 == 1, ]
+test_3 <-  data2[sample3 == 2, ]
 
 
 model3 <- naive_bayes(AtBat ~ Hits, data = data, usekernel = F)
