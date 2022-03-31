@@ -1,22 +1,21 @@
 library(ISLR)
 library(dplyr)
 library(ggplot2)
-data <- Hitters 
+data <- na.omit(Hitters)
+
 happy <- sample(2, nrow(data), replace = T, prob = c(0.8, 0.2)) 
 train <- data.frame(data[happy==1, ])
 test <- data.frame(data[happy==2, ])
 
-model <- glm(League ~ Hits,  family = "binomial", data = train)
-
-Predicted_data <- data.frame(Hits=seq(min(data$Hits), max(data$Hits), len=500))
-
-Predicted_data$League <- predict(model, Predicted_data, type = "response")
-
-ggplot(train, aes(x=Hits, y=League)) + geom_point() + geom_smooth()
+model <- glm(League ~ Hits + HmRun + RBI,  family = "binomial", data = train)
 
 
+p <- as.data.frame(predict(model, train, type = "response"))
 
+new.data <- cbind(train, p)
+ggplot(new.data, aes(x=predict(model, train, type = "response"), y=League)) + stat_sum(color ="red") +stat_smooth(method = "glm", method.args = list(family = binomial), se=FALSE)
 
-
-
+table(p < 0.5, train$League)
+table(p != 0.5, train$League)
+table(p > 0.5, train$League)
 
