@@ -8,7 +8,8 @@ train_2 <- data2[sample2 == 1, ]
 test_2 <-  data2[sample2 == 2, ]
 
 
-model2 <- naive_bayes(League ~ Hits + HmRun + RBI, data = train_2, usekernel = F)
+model3 <- naive_bayes(League ~ HmRun, data = train_2, usekernel = F)
+model4 <- naive_bayes(League ~ RBI, data = train_2, usekernel = F)
 
 p2 <-  as.data.frame(predict(model, train_2, type = "response"))
 
@@ -16,6 +17,7 @@ new.data2 <- cbind(train_2, p2)
 
 ggplot(new.data2, aes(x = predict(model, train_2, type = "response") , y = League)) + stat_sum(color = "blue") + stat_smooth(method = "glm", method.args = list(family = binomial), se=FALSE)
 
+
 table(p2 < 0.5, train_2$League)
-table(p2 == 0.5, train_2$League)
+table(p2 != 0.5, train_2$League)
 table(p2 > 0.5, train_2$League)
